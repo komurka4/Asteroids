@@ -9,6 +9,10 @@ def main():
     clock = pygame.time.Clock()
     dt: float = 0.0
 
+    updatable = pygame.sprite.Group()
+    drawable  = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
     ship = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
@@ -18,8 +22,9 @@ def main():
                 return
 
         screen.fill("black")
-        ship.update(dt)
-        ship.draw(screen)
+        updatable.update(dt)
+        for sprite in drawable:
+            sprite.draw(screen)
 
         pygame.display.flip() # update the display
         dt = clock.tick(60) / 1000 # limit to 60 fps and convert to seconds
